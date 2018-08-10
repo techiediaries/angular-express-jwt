@@ -8,7 +8,7 @@
     "generate": "node fakeData.js > database.json"
   },
   "keywords": [],
-  "author": "",
+  "author": "Ahmed Bouchefra",
   "license": "ISC",
   "dependencies": {
     "faker": "^4.1.0",
