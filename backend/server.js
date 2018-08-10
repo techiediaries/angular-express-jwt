@@ -6,6 +6,7 @@ const jwt = require('jsonwebtoken')
 
 const server = jsonServer.create()
 const router = jsonServer.router('./database.json')
+
 server.use(jsonServer.defaults());
 server.use(bodyParser.urlencoded({extended: true}))
 server.use(bodyParser.json())
@@ -13,9 +14,8 @@ server.use(bodyParser.json())
 
 
 const createToken = (payload) => jwt.sign(payload, 'SECRET_KEY',{ expiresIn: '1h' });
-const verifyToken = (token) => jwt.verify(token, 
-                                          SECRET_KEY, 
-                                          (err, decode) => decode !== undefined ?  decode : err)
+const verifyToken = (token) => jwt.verify(token,'SECRET_KEY');
+
 const userdb = JSON.parse(fs.readFileSync('./database.json', 'UTF-8')).users || [];
 
 const isAuthenticated = ({email, password}) => {
@@ -36,21 +36,29 @@ server.post('/auth/login', (req, res) => {
 })
 
 server.use(/^(?!\/auth).*$/,  (req, res, next) => {
-  if (req.headers.authorization === undefined || 
-    req.headers.authorization.split(' ')[0] !== 'Bearer'){
-    const status = 401
-    const message = 'Bad authorization header'
-    res.status(status).json({status, message})
-    return
+
+  if(req.method === 'GET'){
+    next();
   }
-  try {
-     verifyToken(req.headers.authorization.split(' ')[1])
-     next()
-  } catch (err) {
-    const status = 401
-    const message = 'Error: access_token is not valid'
-    res.status(status).json({status, message})
+  else
+  {
+    if (req.headers.authorization === undefined || 
+      req.headers.authorization.split(' ')[0] !== 'Bearer'){
+      const status = 401
+      const message = 'Bad authorization header'
+      res.status(status).json({status, message})
+      return
+    }
+    try {
+       verifyToken(req.headers.authorization.split(' ')[1])
+       next()
+    } catch (err) {
+      const status = 401
+      const message = 'Error: access_token is not valid'
+      res.status(status).json({status, message})
+    }
   }
+  
 })
 
 server.use(router)
