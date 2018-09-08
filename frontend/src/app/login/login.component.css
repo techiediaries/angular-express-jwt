@@ -3,5 +3,6 @@ form {
     padding: 10px;
 }
 
- 
-
+mat-card{
+    margin: 20%;
+}

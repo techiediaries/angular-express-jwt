@@ -1,3 +1,19 @@
-<p>
-  contact-detail works!
-</p>
+<mat-card>
+    <mat-card-header>
+  <mat-card-title>
+    Contact #{{data.id}}
+  </mat-card-title>
+  <mat-card-subtitle>	
+    {{data.firstName}} {{data.lastName}}
+   </mat-card-subtitle> 
+  </mat-card-header>  
+  <mat-card-content>
+    <p>Title: {{data.title}}</p>
+    <p>Email: {{data.email}}</p>
+    <p>Phone: {{data.phone}}</p>
+    <p>Country: {{data.country}}</p>
+    <p>City: {{data.city}}</p>
+  </mat-card-content>
+</mat-card>
+
+

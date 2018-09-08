@@ -1,3 +1,58 @@
-<p>
-  contact-list works!
-</p>
+<mat-table [dataSource]="dataSource">
+
+
+  <ng-container matColumnDef="name">
+      <mat-header-cell *matHeaderCellDef>Name</mat-header-cell>
+      <mat-cell class="description-cell"
+                *matCellDef="let contact">[{{contact.id}}] {{contact.firstName}} {{contact.lastName}}</mat-cell>
+
+  </ng-container>
+
+
+  <ng-container matColumnDef="email">
+    <mat-header-cell *matHeaderCellDef>Email</mat-header-cell>
+    <mat-cell *matCellDef="let contact">{{contact.email}}</mat-cell>
+  </ng-container>
+
+  <!--<ng-container matColumnDef="phone">
+    <mat-header-cell *matHeaderCellDef>Phone</mat-header-cell>
+    <mat-cell *matCellDef="let contact">{{contact.phone}}</mat-cell>
+  </ng-container>-->
+
+  <ng-container matColumnDef="country">
+    <mat-header-cell *matHeaderCellDef>Country</mat-header-cell>
+    <mat-cell *matCellDef="let contact">{{contact.country}} ({{contact.city}})</mat-cell>
+  </ng-container>
+  <ng-container matColumnDef="title">
+    <mat-header-cell *matHeaderCellDef>Title</mat-header-cell>
+    <mat-cell *matCellDef="let contact">{{contact.title}}</mat-cell>
+  </ng-container>
+  
+  <ng-container matColumnDef="actions">
+      <mat-header-cell *matHeaderCellDef>Actions</mat-header-cell>
+      <mat-cell *matCellDef="let contact">
+        <button mat-raised-button  (click)="openDialog(contact)">Details</button>
+      </mat-cell>
+  </ng-container>
+  
+  <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+
+  <mat-row *matRowDef="let row; columns: displayedColumns"></mat-row>
+
+</mat-table>
+<div style="display: grid;  grid-template-columns: 1fr 1fr 1fr 1fr; ">
+<button (click)="firstPage()" mat-raised-button color="primary">
+  First
+</button>
+  
+<button (click)="previousPage()" mat-raised-button color="primary">
+  Previous
+</button>
+
+<button (click)="nextPage()" mat-raised-button color="primary">
+  Next
+</button>
+<button (click)="lastPage()" mat-raised-button color="primary">
+  Last
+</button>
+</div>  

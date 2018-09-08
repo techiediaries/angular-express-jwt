@@ -5,6 +5,6 @@ export class Contact {
     email: string;
     phone: string;
     city: string;
-    country: string
+    country: string;
     title: string
 }

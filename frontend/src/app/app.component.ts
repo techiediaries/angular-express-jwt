@@ -1,5 +1,7 @@
 import { Component , OnInit } from '@angular/core';
 import { ApiService } from './api.service';
+import { JwtService } from './jwt.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -8,7 +10,7 @@ import { ApiService } from './api.service';
 })
 export class AppComponent{
   
-  constructor(private apiService: ApiService){}
+  constructor(private apiService: ApiService, private jwtService: JwtService, private router: Router){}
   ngOnInit(){
     this.apiService.getContacts().subscribe((res)=>{
       console.log(res.body);
@@ -50,5 +52,10 @@ export class AppComponent{
     this.apiService.deleteContact(201).subscribe((res)=>{
       console.log("Deleted a contact");
     });
+  }
+
+  logOut(){
+    this.jwtService.logout();
+    this.router.navigate(['login']);
   }
 }
